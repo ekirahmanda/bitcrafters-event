@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <main>
       <Header />
-      Halo, Kak.
+      Ini adalah staging
     </main>
   );
 }
