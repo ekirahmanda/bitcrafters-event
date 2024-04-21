@@ -5,6 +5,9 @@ export default function Home() {
     <main>
       <Header />
       Halo, Kak.
+      <div>
+        <button className="btn btn-primary">Submit</button>
+      </div>
     </main>
   );
 }
