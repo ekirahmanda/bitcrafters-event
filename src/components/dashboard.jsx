@@ -35,24 +35,34 @@ export default function Dashboard() {
   return (
     <section>
       {/* input search bar */}
-      <input
-        type="text"
-        placeholder="Search events..."
-        value={searchQuery}
-        onChange={handleSearchChange}
-      />
+      <div class="flex border-2 bg-primary overflow-hidden max-w-md mx-auto font-[sans-serif]">
+        <input
+          type="email"
+          placeholder="Search Something..."
+          class="w-full outline-none bg-white text-gray-600 text-sm px-4 py-3"
+          onChange={handleSearchChange}
+        />
+      </div>
 
       {/* list eventItem */}
       {filteredData.map((eventItem) => {
         const { events, participants } = eventItem;
 
         return (
-          <div key={events.id}>
-            <h4>{events.title}</h4>
-            <p>{events.description}</p>
-            <img src={events.image} alt={events.title} />
-            <p>Date & Time: {events.dateTime}</p>
-            <p>Author ID: {events.author}</p>
+          <div
+            key={events.id}
+            className="bg-white shadow-lg rounded-lg p-4 mb-4"
+          >
+            <h4 className="font-semibold text-lg text-gray-800 mb-2">
+              {events.title}
+            </h4>
+            <p className="text-gray-700 mb-2">{events.description}</p>
+            <img
+              src={events.image}
+              alt={events.title}
+              className="avatar w-24 rounded"
+            />
+            <p className="text-gray-600 mb-2">Date & Time: {events.dateTime}</p>
 
             {/* list participants */}
             {participants.length > 0 && (
@@ -66,7 +76,7 @@ export default function Dashboard() {
                 ))}
               </div>
             )}
-            <button>More Details</button>
+            <button className="btn btn-primary">More Details</button>
           </div>
         );
       })}
