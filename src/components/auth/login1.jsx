@@ -9,7 +9,7 @@ export const Login1 = () => {
       <div className="flex justify-center items-center">
         <div className="w-[240px]">
           <h1 className="text-2xl">Login</h1>
-          <p className="text-lg">Welcome back!</p>
+          <p className="text-lg">Welcome back, buddy!</p>
           <form className="mt-5 form-control gap-2">
             <input
               className="input input-primary"
