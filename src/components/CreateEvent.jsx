@@ -1,45 +1,56 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
-import toast from "react-hot-toast";
+// import { MoveLeft } from "lucide-react";
+// import { Plus } from "lucide-react"
 
-export const EditEvent = ({ event }) => {
-  // const { event } = event;
+export const CreateEvent = () => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
+  const [dateTime, setDate] = useState("");
+  const [userData, setUserData] = useState("");
+  const [token, setToken] = useState("");
+
   const router = useRouter();
 
-  const [title, setTitle] = useState(events.title);
-  console.log(events);
-  const [description, setDescription] = useState(events.description);
-  const [image, setImage] = useState(events.image);
-  const [dateTime, setDate] = useState(events.dateTime);
+  useEffect(() => {
+    const userDataFromLS = localStorage.getItem("user");
+    setUserData(JSON.parse(userDataFromLS));
+    setToken(Cookies.get("token"));
+  }, []);
 
-  async function handleEditEvent(event) {
-    const id = events.id;
-
+  async function handleCreateEvent(event) {
     event.preventDefault();
 
-    const token = Cookies.get("token");
-
-    const res = await fetch(`https://eventmakers.devscale.id/events/${id}`, {
-      method: "PATCH",
+    const res = await fetch("https://eventmakers.devscale.id/events/", {
+      method: "POST",
       cache: "no-store",
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-
       body: JSON.stringify({
-        token,
         title,
         description,
         image,
         dateTime,
+        author: userData.id,
       }),
     });
 
-    toast.success("Successfully edited the event!");
+    router.refresh();
+    toast.success("Events Added Successfully!");
     router.push("/dashboard");
+
+    // ini ga ngaruh, ga hilangg
+    setTitle("");
+    setDescription("");
+    setDate("");
+    setImage("");
 
     const data = await res.json();
     if (res.ok) {
@@ -50,23 +61,20 @@ export const EditEvent = ({ event }) => {
   }
 
   return (
-    <main>
+    <main className="mx-6 lg:mx-50">
       <button
-        className="hover:bg-zinc-100 flex flex-row gap-2 p-2 rounded-lg border-2 mb-6"
+        className="hover:bg-accent-100 flex flex-row gap-2 p-2 rounded-lg border-1 mb-4"
         onClick={() => router.push("/dashboard")}
       >
-        <p className="font-bold text-zinc-600">Back to Dashboard</p>
+        <p>Back to Dashboard</p>
       </button>
-
       <div className="flex flex-col gap-6">
         {/* Title */}
-        <div className="flex flex-col gap-2">
-          <h2 className="text-lg font-bold">Edit Event</h2>
-          <h1 className="text-2xl font-bold">{events.title}</h1>
+        <div className="flex flex-col gap-2 font-bold">
+          <h2>Create New Event</h2>
         </div>
 
-        {/* Form */}
-        <form className="flex flex-col gap-2" onSubmit={handleEditEvent}>
+        <form className="flex flex-col gap-2" onSubmit={handleCreateEvent}>
           <div className="">
             <p>Title</p>
             <input
@@ -110,9 +118,9 @@ export const EditEvent = ({ event }) => {
               ></input>
             </div>
           </div>
-          <button className="btn btn-primary">
-            <p>Save Edit</p>
-            <SaveIcon />
+
+          <button className="btn btn-secondary mt-4">
+            <p>Create New Event</p>
           </button>
         </form>
       </div>
