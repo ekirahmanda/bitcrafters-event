@@ -4,9 +4,8 @@ import { Header } from "@/components/Header";
 export default function Home() {
   return (
     <main>
-      <Dashboard />
       <Header />
-      Halo, ini staging
+      <Dashboard />
       <div>
         <button className="btn btn-primary">Submit</button>
       </div>
