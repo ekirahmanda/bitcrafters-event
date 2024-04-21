@@ -1,10 +1,9 @@
-import { Header } from "@/components/Header";
+import Dashboard from "@/components/dashboard";
 
 export default function Home() {
   return (
     <main>
-      <Header />
-      Ini adalah staging
+      <Dashboard />
     </main>
   );
 }
