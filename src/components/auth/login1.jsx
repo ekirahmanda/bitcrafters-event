@@ -20,8 +20,8 @@ export const Login1 = () => {
     setMessage(jsonRes.message);
   }
   return (
-    <main className="h-screen grid grid-cols-2">
-      <div className="bg-cyan-500 flex justify center items-center ">
+    <main className="h-screen grid grid-cols-2 border border-cyan-500">
+      <div className="bg-cyan-500 flex justify-center items-center ">
         <img
           src="https://assets-prd.ignimgs.com/2021/09/16/bitcraft-button-1631814716884.jpg?width=300&crop=1%3A1%2Csmart&auto=webp&dpr=2"
           width={500}
@@ -37,7 +37,7 @@ export const Login1 = () => {
             <input
               className="input input-primary"
               name="email"
-              placeholder="Entar your email"
+              placeholder="Enter your email"
             />
             <input
               className="input input-primary"
