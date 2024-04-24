@@ -1,45 +1,42 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 
 export const EditEvent = ({ event }) => {
   // const { event } = event;
   const router = useRouter();
-
-  const [title, setTitle] = useState(events.title);
-  console.log(events);
-  const [description, setDescription] = useState(events.description);
-  const [image, setImage] = useState(events.image);
-  const [dateTime, setDate] = useState(events.dateTime);
+  console.log(event.data);
+  const eventResponse = event.data.events;
+  const [title, setTitle] = useState(eventResponse.title);
+  const [description, setDescription] = useState(eventResponse.description);
+  const [image, setImage] = useState(eventResponse.image);
+  const [dateTime, setDate] = useState(eventResponse.dateTime);
+  const [author, setAuthor] = useState(eventResponse.author);
 
   async function handleEditEvent(event) {
-    const id = events.id;
-
     event.preventDefault();
 
     const token = Cookies.get("token");
 
-    const res = await fetch(`https://eventmakers.devscale.id/events/${id}`, {
-      method: "PATCH",
-      cache: "no-store",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    console.log(event.eventid);
 
-      body: JSON.stringify({
-        token,
-        title,
-        description,
-        image,
-        dateTime,
-      }),
-    });
+    const res = await fetch(
+      `https://eventmakers.devscale.id/events/${event.eventid}`,
+      {
+        method: "PATCH",
+        cache: "no-store",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     toast.success("Successfully edited the event!");
-    router.push("/dashboard");
+    router.push("/userdashboard");
 
     const data = await res.json();
     if (res.ok) {
@@ -62,7 +59,7 @@ export const EditEvent = ({ event }) => {
         {/* Title */}
         <div className="flex flex-col gap-2">
           <h2 className="text-lg font-bold">Edit Event</h2>
-          <h1 className="text-2xl font-bold">{events.title}</h1>
+          <h1 className="text-2xl font-bold">{eventResponse.title}</h1>
         </div>
 
         {/* Form */}
@@ -112,7 +109,6 @@ export const EditEvent = ({ event }) => {
           </div>
           <button className="btn btn-primary">
             <p>Save Edit</p>
-            <SaveIcon />
           </button>
         </form>
       </div>

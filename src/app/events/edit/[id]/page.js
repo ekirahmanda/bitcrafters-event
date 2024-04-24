@@ -9,7 +9,8 @@ export async function getEvent(eventid) {
 
   const { data } = await res.json();
   if (!!res.ok) {
-    return data;
+    const resp = { data: data, eventid: eventid };
+    return resp;
   } else {
     throw new Error(data.message);
   }
@@ -19,6 +20,8 @@ export default async function Page({ params }) {
   const { id } = params;
 
   const event = await getEvent(id);
+
+  console.log(event + " test");
 
   return (
     <main>
