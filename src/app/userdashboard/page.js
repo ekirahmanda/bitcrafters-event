@@ -1,4 +1,5 @@
 import { UserDashboard } from "@/components/UserDashboard";
+import { Header } from "@/components/Header";
 
 export async function listEvents() {
   const res = await fetch("https://eventmakers.devscale.id/events", {
@@ -10,5 +11,10 @@ export async function listEvents() {
 export default async function Dashboard() {
   const { data } = await listEvents();
 
-  return <UserDashboard events={data} />;
+  return (
+    <main>
+      <Header />
+      <UserDashboard events={data} />
+    </main>
+  );
 }

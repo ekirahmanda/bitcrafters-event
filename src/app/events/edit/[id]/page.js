@@ -1,4 +1,3 @@
-import { Header } from "@/components/Header";
 import { EditEvent } from "@/components/EditEvent";
 
 export async function getEvent(eventid) {
@@ -9,8 +8,9 @@ export async function getEvent(eventid) {
 
   const { data } = await res.json();
   if (!!res.ok) {
+    console.log("resp from eventid " + data);
     const resp = { data: data, eventid: eventid };
-    return resp;
+    return JSON.stringify(resp);
   } else {
     throw new Error(data.message);
   }
@@ -25,7 +25,6 @@ export default async function Page({ params }) {
 
   return (
     <main>
-      <Header />
       <EditEvent event={event} />
     </main>
   );

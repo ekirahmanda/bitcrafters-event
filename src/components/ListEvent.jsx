@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { SearchEvents } from "@/components/SearchEvents";
+import { SearchEvent } from "@/components/SearchEvent";
 import Cookies from "js-cookie";
 import Link from "next/link";
 

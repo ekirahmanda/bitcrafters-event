@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-// import { MoveLeft } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 // import { Plus } from "lucide-react"
 
 export const CreateEvent = () => {
@@ -18,7 +18,7 @@ export const CreateEvent = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const userDataFromLS = localStorage.getItem("user");
+    const userDataFromLS = localStorage.getItem("userdata");
     setUserData(JSON.parse(userDataFromLS));
     setToken(Cookies.get("token"));
   }, []);
@@ -44,7 +44,7 @@ export const CreateEvent = () => {
 
     router.refresh();
     toast.success("Events Added Successfully!");
-    router.push("/dashboard");
+    router.push("/userdashboard");
 
     // ini ga ngaruh, ga hilangg
     setTitle("");
@@ -61,16 +61,16 @@ export const CreateEvent = () => {
   }
 
   return (
-    <main className="mx-6 lg:mx-50">
+    <main className="mx-6 lg:mx-80 py-8">
       <button
-        className="hover:bg-accent-100 flex flex-row gap-2 p-2 rounded-lg border-1 mb-4"
-        onClick={() => router.push("/dashboard")}
+        className="hover:bg-zinc-100 flex flex-row gap-2 p-2 rounded-lg border-2 mb-6 text-sm"
+        onClick={() => router.push("/userdashboard")}
       >
-        <p>Back to Dashboard</p>
+        <p className="font-bold text-zinc-600">Back to Dashboard</p>
       </button>
       <div className="flex flex-col gap-6">
         {/* Title */}
-        <div className="flex flex-col gap-2 font-bold">
+        <div className="flex flex-col gap-2 font-bold text-2xl">
           <h2>Create New Event</h2>
         </div>
 
@@ -80,7 +80,6 @@ export const CreateEvent = () => {
             <input
               className="w-full input input-primary"
               type="text"
-              placeholder="input event title..."
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
@@ -90,7 +89,6 @@ export const CreateEvent = () => {
             <p>Description</p>
             <textarea
               className="w-full textarea textarea-primary"
-              placeholder="input event description..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
@@ -102,7 +100,7 @@ export const CreateEvent = () => {
               <input
                 className="w-full input input-primary"
                 value={dateTime}
-                type="date"
+                type="text"
                 onChange={(e) => setDate(e.target.value)}
                 required
               ></input>
@@ -119,7 +117,7 @@ export const CreateEvent = () => {
             </div>
           </div>
 
-          <button className="btn btn-secondary mt-4">
+          <button className="btn btn-primary mt-4">
             <p>Create New Event</p>
           </button>
         </form>

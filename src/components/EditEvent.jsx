@@ -1,30 +1,33 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { ChevronsLeft } from "lucide-react";
 import toast from "react-hot-toast";
 
 export const EditEvent = ({ event }) => {
-  // const { event } = event;
   const router = useRouter();
-  console.log(event.data);
+  event = JSON.parse(event);
   const eventResponse = event.data.events;
   const [title, setTitle] = useState(eventResponse.title);
   const [description, setDescription] = useState(eventResponse.description);
   const [image, setImage] = useState(eventResponse.image);
   const [dateTime, setDate] = useState(eventResponse.dateTime);
-  const [author, setAuthor] = useState(eventResponse.author);
+  const [authorId, setAuthorId] = useState("");
+
+  useEffect(() => {
+    setAuthorId(event.eventid);
+  }, []);
 
   async function handleEditEvent(event) {
     event.preventDefault();
 
     const token = Cookies.get("token");
-
-    console.log(event.eventid);
+    console.log(token);
 
     const res = await fetch(
-      `https://eventmakers.devscale.id/events/${event.eventid}`,
+      `https://eventmakers.devscale.id/events/${authorId}`,
       {
         method: "PATCH",
         cache: "no-store",
@@ -32,6 +35,13 @@ export const EditEvent = ({ event }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
+        body: JSON.stringify({
+          title,
+          description,
+          image,
+          dateTime,
+          author: authorId,
+        }),
       }
     );
 
@@ -47,10 +57,10 @@ export const EditEvent = ({ event }) => {
   }
 
   return (
-    <main>
+    <main className="mx-6 lg:mx-80 py-8">
       <button
-        className="hover:bg-zinc-100 flex flex-row gap-2 p-2 rounded-lg border-2 mb-6"
-        onClick={() => router.push("/dashboard")}
+        className="hover:bg-zinc-100 flex flex-row gap-2 p-2 rounded-lg border-2 mb-6 text-sm"
+        onClick={() => router.push("/userdashboard")}
       >
         <p className="font-bold text-zinc-600">Back to Dashboard</p>
       </button>
@@ -91,7 +101,7 @@ export const EditEvent = ({ event }) => {
               <input
                 className="w-full input input-primary"
                 value={dateTime}
-                type="date"
+                type="text"
                 onChange={(e) => setDate(e.target.value)}
                 required
               ></input>
@@ -107,7 +117,7 @@ export const EditEvent = ({ event }) => {
               ></input>
             </div>
           </div>
-          <button className="btn btn-primary">
+          <button className="btn btn-secondary">
             <p>Save Edit</p>
           </button>
         </form>

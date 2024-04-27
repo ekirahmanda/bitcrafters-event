@@ -1,10 +1,8 @@
-import { Register } from "@/components/auth/register";
-import { Header } from "@/components/Header";
+import { Register } from "@/components/auth/Register";
 
 export default function Page() {
   return (
     <div>
-      <Header />
       <Register />
     </div>
   );

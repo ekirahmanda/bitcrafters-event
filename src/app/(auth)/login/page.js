@@ -1,11 +1,9 @@
-import { Login1 } from "@/components/auth/login1";
-import { Header } from "@/components/Header";
+import { Login } from "@/components/auth/Login";
 
 export default function Page() {
   return (
     <div>
-      <Header />
-      <Login1 />
+      <Login />
     </div>
   );
 }

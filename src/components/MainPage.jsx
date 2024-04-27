@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
-export default function Dashboard() {
+export default function MainPage() {
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -34,16 +34,6 @@ export default function Dashboard() {
 
   return (
     <section>
-      {/* input search bar */}
-      <div class="flex border-2 bg-primary overflow-hidden max-w-md mx-auto font-[sans-serif]">
-        <input
-          type="email"
-          placeholder="Search Something..."
-          class="w-full outline-none bg-white text-gray-600 text-sm px-4 py-3"
-          onChange={handleSearchChange}
-        />
-      </div>
-
       {/* list eventItem */}
       {filteredData.map((eventItem) => {
         const { events, participants } = eventItem;
@@ -76,7 +66,9 @@ export default function Dashboard() {
                 ))}
               </div>
             )}
-            <button className="btn btn-primary">More Details</button>
+            <button className="btn btn-primary" href={`/event/${events.id}`}>
+              More Details
+            </button>
           </div>
         );
       })}

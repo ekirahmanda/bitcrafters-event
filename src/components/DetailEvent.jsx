@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
 export const DetailEvent = ({ id }) => {
@@ -80,24 +80,24 @@ export const DetailEvent = ({ id }) => {
 
   return (
     <main>
-      {/* <div>Login as: {userData ? userData.name : ""}</div> */}
-
-      <div>
+      <div className="p-4 space-y-2 items-center justify-center flex flex-col">
         {eventData ? (
-          <div>
-            <div>
+          <div className="justify-between w-[1000px] flex flex-col gap-2 h-full overflow-hidden rounded-xl border  border-gray-100 dark:border-gray-800">
+            <div className="p-4 space-y-2">
               <button onClick={() => router.back()} className="flex gap-2">
-                <span className="font-bold ">Back to previous menu</span>
+                <span className="font-bold ">Back</span>
               </button>
               <img
                 src={eventData.events.image}
                 className="object-cover h-48 w-104 rounded-md flex justify-center items-center"
               ></img>
               <h2 className="text-2xl font-bold">{eventData.events.title}</h2>
-              <p>{eventData.events.dateTime}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {eventData.events.dateTime}
+              </p>
               <p>{eventData.events.description}</p>
             </div>
-            <div>List of participants: </div>
+            <div className="p-4 pb-0 font-semibold">List of participants: </div>
             <div className="flex gap-x-2 p-4 pt-0">
               {eventData.participants.length > 0 ? (
                 eventData.participants.map((participant, _) => (
@@ -106,14 +106,14 @@ export const DetailEvent = ({ id }) => {
                   </p>
                 ))
               ) : (
-                <p>No Participant</p>
+                <p className="text-gray-500 italic">No participant yet</p>
               )}
             </div>
             <button
               className="btn btn-neutral text-base text-white"
               onClick={() => handleJoinEvent(eventData.events.id)}
             >
-              Join Successfully!
+              Join
             </button>
             {/* <button
               className="bg-slate-800 text-slate-50 p-2 rounded"
